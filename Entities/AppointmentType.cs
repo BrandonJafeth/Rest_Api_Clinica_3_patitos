@@ -8,8 +8,12 @@ namespace Entities
 {
     public class AppointmentType
     {
-        public int AppointmentTypeId { get; set; }
-        public string Name { get; set; }
+        public int Id_Appoitment_Type { get; set; }
+        public string Name_type { get; set; }
+     
+
+        //Relations
+
         public ICollection<Appointment> Appointments { get; set; }
     }
 }
