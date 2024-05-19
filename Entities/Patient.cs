@@ -8,6 +8,8 @@
         public string Phone { get; set; }
 
         // Relations
-        public ICollection<Appointment> Appointments { get; set; }
+
+        public Appointment Appointment { get; set; }
+        
     }
 }
