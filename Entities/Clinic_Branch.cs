@@ -8,9 +8,10 @@ namespace Entities
 {
     public class Clinic_Branch
     {
-        public int Clinic_BranchId { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
+        public int Id_ClinicBranch{ get; set; }
+        public string Branch_Name { get; set; }
+       
+        //Relations
    
     }
 }
