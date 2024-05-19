@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DcbIMNmlLV4btbVnNJY3SrZz145Nr046ikRBwvkYvx2YL+i7RATQ7/9p57ACnac3QaOW+o7n0E3YkiVu+6omIg==",
+  "dgSpecHash": "tX6j64Olc1duZOPdT7+xumxtyrP7FrFYVYxP1r3/3jV7pyHMV9ljnKj+hGgLG358Ay9UZwKq4kL0v3Ibybbj+g==",
   "success": true,
-  "projectFilePath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Services\\Services.csproj",
+  "projectFilePath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\brand\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\brand\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
