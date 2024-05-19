@@ -10,8 +10,9 @@ namespace Entities
     {
         public int Id_ClinicBranch{ get; set; }
         public string Branch_Name { get; set; }
-       
+
         //Relations
-   
+        public int Id_Appoitment { get; set; }
+        public Appointment Appointment { get; set; }
     }
 }

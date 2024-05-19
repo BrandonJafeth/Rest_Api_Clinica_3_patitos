@@ -16,6 +16,11 @@ namespace Entities
 
         //Relations
 
-        public AppointmentType AppointmentType { get; set; }
+
+        public ICollection<AppointmentType> AppointmentTypes { get; set; }
+        public ICollection<Patient> Patients { get; set; }
+
+        public ICollection<Clinic_Branch> Clinic_Branches { get; set; }
+
     }
 }

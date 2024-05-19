@@ -10,10 +10,13 @@ namespace Entities
     {
         public int Id_Appoitment_Type { get; set; }
         public string Name_type { get; set; }
-     
+
 
         //Relations
+        public int Id_Appoitment { get; set; }
 
-        public ICollection<Appointment> Appointments { get; set; }
+        public Appointment Appointment { get; set; }
+
+
     }
 }
