@@ -16,7 +16,6 @@ namespace Entities
 
 
         //Relations
-        public List<Appointment> Appointments { get; set; }
 
         public Patient Patient { get; set; }
 
