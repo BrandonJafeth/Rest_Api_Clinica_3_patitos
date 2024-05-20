@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,10 @@ namespace Entities
     {
         public int Id_Appoitment { get; set; }
         public string Location { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
         public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
-
+     
+    
 
         //Relations
 
@@ -26,7 +27,5 @@ namespace Entities
         public int Id_User { get; set; }
 
         public User User { get; set; }
-
-
     }
 }

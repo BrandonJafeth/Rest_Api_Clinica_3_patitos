@@ -12,13 +12,10 @@ namespace Services.MyDbContext
 {
     public class MyContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
-            //base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=BRANDONCA;Initial Catalog=API;" +
-         "Trusted_Connection=True;MultipleActiveResultSets=True;" +
-        "TrustServerCertificate=True");
         }
+
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
@@ -31,7 +28,6 @@ namespace Services.MyDbContext
                 .HasOne(user => user.Rol)
                 .WithMany(rol => rol.Users)
                 .OnDelete(DeleteBehavior.Cascade); // If a role is deleted, its users are also deleted
-
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(appointment => appointment.User)
