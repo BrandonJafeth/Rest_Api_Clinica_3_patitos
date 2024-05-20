@@ -25,5 +25,7 @@ namespace Services.MyDbContext
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
         public DbSet<Clinic_Branch> Clinic_Branches { get; set; }
 
+        public DbSet<Rol> Roles { get; set; }
+
     }
 }
