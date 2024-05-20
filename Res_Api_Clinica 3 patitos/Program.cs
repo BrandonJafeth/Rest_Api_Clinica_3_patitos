@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Services.Appointments;
 using Services.MyDbContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ISvAppointment, SvAppointment>();
 
 
 builder.Services.AddControllers();
