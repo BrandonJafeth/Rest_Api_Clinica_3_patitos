@@ -27,17 +27,26 @@ namespace Services.MyDbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasOne(user => user.Rol)
+                .WithMany(rol => rol.Users)
+                .OnDelete(DeleteBehavior.Cascade); // If a role is deleted, its users are also deleted
+
+
             modelBuilder.Entity<Appointment>()
                 .HasOne(appointment => appointment.User)
-                .WithMany(user => user.Appointments);
+                .WithMany(user => user.Appointments)
+                .OnDelete(DeleteBehavior.Cascade); // If a user is deleted, their appointments are also deleted
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(appointment => appointment.Clinic_Branch)
-                .WithMany(clinicBranch => clinicBranch.Appointments);
+                .WithMany(clinicBranch => clinicBranch.Appointments)
+                .OnDelete(DeleteBehavior.Cascade); // If a branch is deleted, its appointments are also deleted
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(appointment => appointment.AppointmentType)
-                .WithMany(appointmentType => appointmentType.Appointments);
+                .WithMany(appointmentType => appointmentType.Appointments)
+                .OnDelete(DeleteBehavior.Cascade); // If an appointment type is deleted, its appointments are also deleted
         }
     }
 }
