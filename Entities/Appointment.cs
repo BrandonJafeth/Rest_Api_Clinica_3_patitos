@@ -11,7 +11,7 @@ namespace Entities
     {
         public int Id_Appoitment { get; set; }
         public string Location { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
         public DateTime Date { get; set; }
      
     

@@ -57,6 +57,8 @@ namespace Services.Appointments
             return appointments;
         }
 
+
+
         public async Task<Appointment> UpdateAppointment(int id, Appointment appointment)
         {
             var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
@@ -66,7 +68,7 @@ namespace Services.Appointments
                 throw new Exception("Appointment not found.");
             }
 
-            if (existingAppointment.Status != "ACTIVA")
+            if (!existingAppointment.Status)
             {
                 throw new Exception("Only active appointments can be edited.");
             }
@@ -88,6 +90,13 @@ namespace Services.Appointments
             }
 
             existingAppointment.Date = appointment.Date;
+
+            
+            if (appointment.Status == false)
+            {
+                existingAppointment.Status = false;
+            }
+
             _myDbContext.SaveChanges();
 
             return existingAppointment;
