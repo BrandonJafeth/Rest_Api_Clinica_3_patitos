@@ -16,11 +16,16 @@ namespace Entities
 
         //Relations
 
+        public int Id_ClinicBranch { get; set; }
+        public Clinic_Branch Clinic_Branch { get; set; }
 
-        public ICollection<AppointmentType> AppointmentTypes { get; set; }
-        public ICollection<Patient> Patients { get; set; }
+        public int Id_Appoitment_Type { get; set; }
+        public AppointmentType AppointmentType { get; set; }
 
-        public ICollection<Clinic_Branch> Clinic_Branches { get; set; }
+        public int Id_User { get; set; }
+
+        public User User { get; set; }
+
 
     }
 }
