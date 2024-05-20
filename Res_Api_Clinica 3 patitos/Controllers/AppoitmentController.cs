@@ -1,83 +1,51 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Services.Appointments;
 
-namespace Res_Api_Clinica_3_patitos.Controllers
+namespace API_PruebaEF.Controllers
 {
-    public class AppoitmentController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AppoitmentController : ControllerBase
     {
-        // GET: AppoitmentController
-        public ActionResult Index()
+        private readonly ISvAppointment _svAppointment;
+
+        public AppoitmentController(ISvAppointment svAppointment)
         {
-            return View();
+            _svAppointment = svAppointment;
         }
 
-        // GET: AppoitmentController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public async Task<IEnumerable<Appointment>> Get()
         {
-            return View();
+            return await _svAppointment.GetAllAppointments();
         }
 
-        // GET: AppoitmentController/Create
-        public ActionResult Create()
+        [HttpGet("{id}")]
+        public async Task<Appointment> Get(int id)
         {
-            return View();
+            return await _svAppointment.GetAppointmentById(id);
         }
 
-        // POST: AppoitmentController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Post([FromBody] Appointment appointment)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _svAppointment.AddAppointments(new List<Appointment> { appointment });
+            return Ok();
         }
 
-        // GET: AppoitmentController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] Appointment appointment)
         {
-            return View();
+            await _svAppointment.UpdateAppointment(id, appointment);
+            return Ok();
         }
 
-        // POST: AppoitmentController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AppoitmentController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AppoitmentController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _svAppointment.DeleteAppointment(id, "admin");
+            return Ok();
         }
     }
 }
