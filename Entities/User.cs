@@ -10,15 +10,16 @@ namespace Entities
     {
 
         public int Id_User { get; set; }
+        public string User_Name { get; set; }
         public string Email { get; set; }
+        public string Phone { get; set; }
         public string Password { get; set; }
 
 
         //Relations
-        public Patient Patient { get; set; }
-        public string Pat_Name => Patient?.Pat_Name;
-        public ICollection<Rol> Roles { get; set; }
-
-
+    
+        public ICollection<Appointment> Appointments { get; set; }
+        public int Id_Rol { get; set; }
+        public Rol Rol { get; set; }
     }
 }

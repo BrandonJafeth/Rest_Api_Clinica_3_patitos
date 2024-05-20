@@ -12,8 +12,9 @@ namespace Entities
         public string Name_Rol { get; set; }
 
         //Relations
-        public int Id_User { get; set; }
-        public User User { get; set; }
+
+        public ICollection<User> Users { get; set; }
+      
 
     }
 }
