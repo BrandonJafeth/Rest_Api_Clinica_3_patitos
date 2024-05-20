@@ -38,6 +38,7 @@ namespace Services.MyDbContext
             modelBuilder.Entity<Appointment>()
                 .HasOne(appointment => appointment.AppointmentType)
                 .WithMany(appointmentType => appointmentType.Appointments);
+
         }
     }
 }
