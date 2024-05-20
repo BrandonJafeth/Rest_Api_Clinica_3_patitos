@@ -94,14 +94,14 @@ namespace Services.Appointments
             return existingAppointment;
         }
 
-        public void DeleteAppointment(int id, string role)
+        public async Task DeleteAppointment(int id, string role)
         {
             if (role != "admin")
             {
                 throw new Exception("Only admin users can delete appointments.");
             }
 
-            var existingAppointment = _myDbContext.Appointments.SingleOrDefault(x => x.Id_Appoitment == id);
+            var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
 
             if (existingAppointment == null)
             {
@@ -109,7 +109,7 @@ namespace Services.Appointments
             }
 
             _myDbContext.Appointments.Remove(existingAppointment);
-            _myDbContext.SaveChanges();
+          await  _myDbContext.SaveChangesAsync();
         }
 
         // PRIVATE METHODS for updating appointments
