@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Res_Api_Clinica 3 patitos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bda47c51f6539248a4cc0510624b856a5398ef2a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1ea8d4b88b82d851fa36f367dcf477c76d942a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Res_Api_Clinica 3 patitos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Res_Api_Clinica 3 patitos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
