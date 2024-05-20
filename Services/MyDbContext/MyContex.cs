@@ -23,8 +23,21 @@ namespace Services.MyDbContext
         public DbSet<User> Users { get; set; }
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
         public DbSet<Clinic_Branch> Clinic_Branches { get; set; }
-
         public DbSet<Rol> Roles { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Appointment>()
+                .HasOne(appointment => appointment.User)
+                .WithMany(user => user.Appointments);
+
+            modelBuilder.Entity<Appointment>()
+                .HasOne(appointment => appointment.Clinic_Branch)
+                .WithMany(clinicBranch => clinicBranch.Appointments);
+
+            modelBuilder.Entity<Appointment>()
+                .HasOne(appointment => appointment.AppointmentType)
+                .WithMany(appointmentType => appointmentType.Appointments);
+        }
     }
 }
