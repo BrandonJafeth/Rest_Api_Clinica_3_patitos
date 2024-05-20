@@ -80,7 +80,7 @@ namespace Services.Appointments
             }
 
             // Check if the new date and time are available
-            var isDateTimeAvailable = await IsDateTimeAvailable(appointment.Date, appointment.Time);
+            var isDateTimeAvailable = await IsDateTimeAvailable(appointment.Date);
 
             if (!isDateTimeAvailable)
             {
@@ -88,7 +88,6 @@ namespace Services.Appointments
             }
 
             existingAppointment.Date = appointment.Date;
-            existingAppointment.Time = appointment.Time;
             _myDbContext.SaveChanges();
 
             return existingAppointment;
@@ -109,15 +108,15 @@ namespace Services.Appointments
             }
 
             _myDbContext.Appointments.Remove(existingAppointment);
-          await  _myDbContext.SaveChangesAsync();
+            await _myDbContext.SaveChangesAsync();
         }
 
         // PRIVATE METHODS for updating appointments
-        private async Task<bool> IsDateTimeAvailable(DateTime date, TimeSpan time)
+        private async Task<bool> IsDateTimeAvailable(DateTime date)
         {
-            // Check if any appointment already exists for the same date and time
-            var existingAppointment =  await _myDbContext.Appointments
-                .SingleOrDefaultAsync(x => x.Date.Date == date.Date && x.Time == time);
+            // Check if any appointment already exists for the same date
+            var existingAppointment = await _myDbContext.Appointments
+                .SingleOrDefaultAsync(x => x.Date.Date == date.Date);
 
             return existingAppointment == null;
         }
