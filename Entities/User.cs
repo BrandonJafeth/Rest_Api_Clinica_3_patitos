@@ -9,16 +9,16 @@ namespace Entities
     public class User
     {
 
-        public int Id_User{ get; set; }
-        public string Email { get; set; } 
+        public int Id_User { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }
 
 
         //Relations
-
         public Patient Patient { get; set; }
+        public string Pat_Name => Patient?.Pat_Name;
+        public ICollection<Rol> Roles { get; set; }
 
-      
+
     }
 }
