@@ -4816,24 +4816,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\brand\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\scorp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Res_Api_Clinica 3 patitos\\Res_Api_Clinica 3 patitos.csproj",
+      "projectUniqueName": "C:\\Users\\scorp\\GitRep\\3Patitos\\Res_Api_Clinica 3 patitos\\Res_Api_Clinica 3 patitos.csproj",
       "projectName": "Res_Api_Clinica 3 patitos",
-      "projectPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Res_Api_Clinica 3 patitos\\Res_Api_Clinica 3 patitos.csproj",
-      "packagesPath": "C:\\Users\\brand\\.nuget\\packages\\",
-      "outputPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Res_Api_Clinica 3 patitos\\obj\\",
+      "projectPath": "C:\\Users\\scorp\\GitRep\\3Patitos\\Res_Api_Clinica 3 patitos\\Res_Api_Clinica 3 patitos.csproj",
+      "packagesPath": "C:\\Users\\scorp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\scorp\\GitRep\\3Patitos\\Res_Api_Clinica 3 patitos\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\brand\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\scorp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4841,15 +4836,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\Services.csproj": {
-              "projectPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\Services.csproj"
+            "C:\\Users\\scorp\\GitRep\\3Patitos\\Services\\Services.csproj": {
+              "projectPath": "C:\\Users\\scorp\\GitRep\\3Patitos\\Services\\Services.csproj"
             }
           }
         }
@@ -4903,24 +4897,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.18, 7.0.18]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[7.0.18, 7.0.18]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.18, 7.0.18]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.18, 7.0.18]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
