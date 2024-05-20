@@ -19,7 +19,6 @@ namespace Services.MyDbContext
          "Trusted_Connection=True;MultipleActiveResultSets=True;" +
         "TrustServerCertificate=True");
         }
-        public DbSet<Patient> Patients { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
