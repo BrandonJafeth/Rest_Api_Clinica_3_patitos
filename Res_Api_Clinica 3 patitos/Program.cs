@@ -33,6 +33,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(x =>
+ x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Policy1", builder =>
+    {
+        builder.WithOrigins("https://localhost:5173")
+            .WithMethods("GET", "POST","PUT")
+            .WithHeaders("Content-Type");
+    });
+
+});
+
+
 // Add services to the container.
 
 builder.Services.AddDbContext<MyContext>(options =>
