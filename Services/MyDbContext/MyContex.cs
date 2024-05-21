@@ -24,6 +24,21 @@ namespace Services.MyDbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Appointment>()
+                .HasKey(a => a.Id_Appoitment);
+
+            modelBuilder.Entity<AppointmentType>()
+                .HasKey(a => a.Id_Appoitment_Type);
+
+            modelBuilder.Entity<Clinic_Branch>()
+                .HasKey(a => a.Id_ClinicBranch);
+
+            modelBuilder.Entity<User>()
+                .HasKey(a => a.Id_User);
+
+            modelBuilder.Entity<Rol>()
+                .HasKey(a => a.Id_Rol);
+
             modelBuilder.Entity<User>()
                 .HasOne(user => user.Rol)
                 .WithMany(rol => rol.Users)
