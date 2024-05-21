@@ -27,19 +27,19 @@ namespace API_PruebaEF.Controllers
             return await _svAppointment.GetAppointmentById(id);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Appointment appointment)
-        {
-            await _svAppointment.AddAppointments(new List<Appointment> { appointment });
-            return Ok();
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Post([FromBody] Appointment appointment)
+        //{
+        //    await _svAppointment.AddAppointments(new List<Appointment> { appointment });
+        //    return Ok();
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Appointment appointment)
-        {
-            await _svAppointment.UpdateAppointment(id, appointment);
-            return Ok();
-        }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Put(int id, [FromBody] Appointment appointment)
+        //{
+        //    await _svAppointment.UpdateAppointment(id, appointment);
+        //    return Ok();
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

@@ -3,6 +3,7 @@ using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,10 +40,11 @@ namespace Services.MyDbContext
             modelBuilder.Entity<Rol>()
                 .HasKey(a => a.Id_Rol);
 
-            modelBuilder.Entity<User>()
-                .HasOne(user => user.Rol)
-                .WithMany(rol => rol.Users)
-                .OnDelete(DeleteBehavior.Cascade); // If a role is deleted, its users are also deleted
+            modelBuilder.Entity<Rol>()
+                .HasMany(e => e.Users)
+                .WithOne(e => e.Rol)
+                .HasForeignKey(e => e.Id_Rol)
+                .IsRequired(false);
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(appointment => appointment.User)

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Services.MyDbContext;
 
@@ -11,9 +12,11 @@ using Services.MyDbContext;
 namespace Services.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20240521183217_User entity")]
+    partial class Userentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,13 +142,16 @@ namespace Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RolId_Rol")
+                        .HasColumnType("int");
+
                     b.Property<string>("User_Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id_User");
 
-                    b.HasIndex("Id_Rol");
+                    b.HasIndex("RolId_Rol");
 
                     b.ToTable("Users");
                 });
@@ -180,8 +186,8 @@ namespace Services.Migrations
             modelBuilder.Entity("Entities.User", b =>
                 {
                     b.HasOne("Entities.Rol", "Rol")
-                        .WithMany("Users")
-                        .HasForeignKey("Id_Rol");
+                        .WithMany()
+                        .HasForeignKey("RolId_Rol");
 
                     b.Navigation("Rol");
                 });
@@ -194,11 +200,6 @@ namespace Services.Migrations
             modelBuilder.Entity("Entities.Clinic_Branch", b =>
                 {
                     b.Navigation("Appointments");
-                });
-
-            modelBuilder.Entity("Entities.Rol", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Entities.User", b =>
