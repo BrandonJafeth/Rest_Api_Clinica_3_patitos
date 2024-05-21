@@ -39,8 +39,14 @@ namespace Services.Appointments
         }
 
         // WRITES
-        public async Task<List<Appointment>> AddAppointments(List<Appointment> appointments)
+
+        public async Task<List<Appointment>> AddAppointments(List<Appointment> appointments, string role)
         {
+            if (role != "USER")
+            {
+                throw new Exception("Only users with role USER can create appointments.");
+            }
+
             // Check if any appointment already exists for the same user on the same day
             var existingAppointments = await _myDbContext.Appointments
                     .Where(x => appointments.Any(a => a.User.Id_User == x.User.Id_User && a.Date.Date == x.Date.Date))
@@ -59,8 +65,13 @@ namespace Services.Appointments
 
 
 
-        public async Task<Appointment> UpdateAppointment(int id, Appointment appointment)
+        public async Task<Appointment> UpdateAppointment(int id, Appointment appointment, string role)
         {
+            if (role != "USER")
+            {
+                throw new Exception("Only users with role USER can update appointments.");
+            }
+
             var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
 
             if (existingAppointment == null)
@@ -90,14 +101,15 @@ namespace Services.Appointments
             }
 
             existingAppointment.Date = appointment.Date;
+            existingAppointment.Clinic_Branch = appointment.Clinic_Branch;
+            existingAppointment.AppointmentType = appointment.AppointmentType;
 
-            
             if (appointment.Status == false)
             {
                 existingAppointment.Status = false;
             }
 
-            _myDbContext.SaveChanges();
+            await _myDbContext.SaveChangesAsync();
 
             return existingAppointment;
         }
