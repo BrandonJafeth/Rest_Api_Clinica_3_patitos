@@ -90,14 +90,15 @@ namespace Services.Appointments
             }
 
             existingAppointment.Date = appointment.Date;
+            existingAppointment.Clinic_Branch = appointment.Clinic_Branch;
+            existingAppointment.AppointmentType = appointment.AppointmentType;
 
-            
             if (appointment.Status == false)
             {
                 existingAppointment.Status = false;
             }
 
-            _myDbContext.SaveChanges();
+            await _myDbContext.SaveChangesAsync();
 
             return existingAppointment;
         }
