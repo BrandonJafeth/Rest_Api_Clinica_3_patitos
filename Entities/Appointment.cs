@@ -10,7 +10,6 @@ namespace Entities
     public class Appointment
     {
         public int Id_Appoitment { get; set; }
-        public string Location { get; set; }
         public bool Status { get; set; }
         public DateTime Date { get; set; }
      
