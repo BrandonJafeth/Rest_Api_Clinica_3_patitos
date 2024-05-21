@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "1zxAyw68tR1/+vlw7f2ztn5VqMwC3zc0c/5oK0pNHQMsZIv20cComDhW37aC6dpoEPcu/bMSYFMix38dp9FTbw==",
+  "dgSpecHash": "eD/G+yPVqBNGHBptMO4snGXJ/3Te+kKirOSyLZ4dT9mdmbJS28Mg8g71S268/+6B0s5Dm9uKJYli74Cwp0V0fA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Maria Paula\\Desktop\\Rest_Api_Clinica_3_patitos\\Entities\\Entities.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Entities\\Entities.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\brand\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.18\\microsoft.windowsdesktop.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\brand\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.18\\microsoft.netcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\brand\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.18\\microsoft.aspnetcore.app.ref.7.0.18.nupkg.sha512"
+  ],
   "logs": []
 }
