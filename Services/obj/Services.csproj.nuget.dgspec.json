@@ -133,6 +133,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[7.0.19, )"
+            },
             "Microsoft.Build.Tasks.Core": {
               "target": "Package",
               "version": "[17.9.5, )"
