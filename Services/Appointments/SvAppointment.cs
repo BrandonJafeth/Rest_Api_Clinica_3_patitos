@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Services.Extensions.DtoMapping;
 
 namespace Services.Appointments
 {
@@ -20,22 +21,40 @@ namespace Services.Appointments
 
 
         // READS
-        public async Task<List<Appointment>> GetAllAppointments()
+        public async Task<List<DtoAppointment>> GetAllAppointments()
         {
-            return await _myDbContext.Appointments
+            var appointments = await _myDbContext.Appointments
                 .Include(x => x.User)
                 .Include(x => x.Clinic_Branch)
                 .Include(x => x.AppointmentType)
                 .ToListAsync();
+
+            var dtoAppointments = new List<DtoAppointment>();
+
+            foreach (var appointment in appointments)
+            {
+                var dtoAppointment = await ConvertToDto(appointment);
+                dtoAppointments.Add(dtoAppointment);
+            }
+
+            return dtoAppointments;
         }
 
-        public async Task<Appointment> GetAppointmentById(int id)
+
+        public async Task<DtoAppointment> GetAppointmentById(int id)
         {
-            return await _myDbContext.Appointments
+            var appointment = await _myDbContext.Appointments
                  .Include(x => x.User)
                  .Include(x => x.Clinic_Branch)
                  .Include(x => x.AppointmentType)
                  .SingleOrDefaultAsync(x => x.Id_Appoitment == id);
+
+            if (appointment == null)
+            {
+                throw new Exception("Appointment not found.");
+            }
+
+            return await ConvertToDto(appointment);
         }
 
         // WRITES
@@ -169,5 +188,24 @@ namespace Services.Appointments
 
             return existingAppointment == null;
         }
+
+
+        public async Task<DtoAppointment> ConvertToDto(Appointment appointment)
+        {
+            return new DtoAppointment
+            {
+                Id_Appointment = appointment.Id_Appoitment,
+                Name_type = appointment.AppointmentType.Name_type,
+                Branch_Name = appointment.Clinic_Branch.Branch_Name,
+                Status = appointment.Status,
+                Date = appointment.Date,
+                User_Name = appointment.User.User_Name
+            };
+        }
+
+
+
+
+
     }
 }
