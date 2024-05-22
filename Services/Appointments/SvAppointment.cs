@@ -47,18 +47,46 @@ namespace Services.Appointments
                 throw new Exception("Only users with role USER can create appointments.");
             }
 
-            // Check if any appointment already exists for the same user on the same day
-            var existingAppointments = await _myDbContext.Appointments
-                    .Where(x => appointments.Any(a => a.User.Id_User == x.User.Id_User && a.Date.Date == x.Date.Date))
-                .ToListAsync();
-
-            if (existingAppointments.Count > 0)
+            foreach (var appointment in appointments)
             {
-                throw new Exception("You cannot create another appointment for the same user on the same day, please come back tomorrow..");
-            }
+                var user = await _myDbContext.Users.FindAsync(appointment.Id_User);
+                var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(appointment.Id_ClinicBranch);
+                var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(appointment.Id_Appoitment_Type);
 
-            _myDbContext.Appointments.AddRangeAsync(appointments);
-            _myDbContext.SaveChangesAsync();
+                if (user == null)
+                {
+                    throw new Exception("User not found.");
+                }
+
+                if (clinicBranch == null)
+                {
+                    throw new Exception("Clinic branch not found.");
+                }
+
+                if (appointmentType == null)
+                {
+                    throw new Exception("Appointment type not found.");
+                }
+
+                // Buscar la última cita del usuario
+                var lastAppointment = await _myDbContext.Appointments
+                    .Where(x => x.Id_User == appointment.Id_User && x.Date.Date == appointment.Date.Date)
+                    .FirstOrDefaultAsync();
+
+                // Comprobar si ha pasado suficiente tiempo desde la última cita
+                if (lastAppointment != null)
+                {
+                    throw new Exception("You cannot create another appointment for the same user on the same day.");
+                }
+
+                // Asignar el usuario, la clínica y el tipo de cita a la cita
+                appointment.User = user;
+                appointment.Clinic_Branch = clinicBranch;
+                appointment.AppointmentType = appointmentType;
+
+                _myDbContext.Appointments.Add(appointment);
+                await _myDbContext.SaveChangesAsync();
+            }
 
             return appointments;
         }

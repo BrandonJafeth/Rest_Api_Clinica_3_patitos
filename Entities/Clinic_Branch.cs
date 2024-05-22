@@ -12,6 +12,6 @@ namespace Entities
         public string Branch_Name { get; set; }
 
         //Relations
-        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment>? Appointments { get; set; }
     }
 }

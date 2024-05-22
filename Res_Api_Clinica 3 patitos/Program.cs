@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +10,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
+// Configuración de autenticación JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -37,37 +35,32 @@ builder.Services.AddControllers()
     .AddNewtonsoftJson(x =>
  x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Policy1", builder =>
     {
-        builder.WithOrigins("https://localhost:5173")
-            .WithMethods("GET", "POST","PUT")
+        builder.WithOrigins("https://localhost:7066")
+            .WithMethods("GET", "POST", "PUT")
             .WithHeaders("Content-Type");
     });
 
 });
 
-
-// Add services to the container.
-
+// Agregar servicios al contenedor.
 builder.Services.AddDbContext<MyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ISvAppointment, SvAppointment>();
 builder.Services.AddScoped<ISvUser, SvUser>();
 
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Obtener más información sobre la configuración de Swagger/OpenAPI en https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar el pipeline de solicitudes HTTP.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
