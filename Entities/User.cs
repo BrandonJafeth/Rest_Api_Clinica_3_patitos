@@ -18,7 +18,7 @@ namespace Entities
 
         //Relations
     
-        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment>? Appointments { get; set; }
         public int? Id_Rol { get; set; }
         public Rol? Rol { get; set; }
     }

@@ -46,6 +46,19 @@ namespace Services.MyDbContext
                 .HasForeignKey(e => e.Id_Rol)
                 .IsRequired(false);
 
+            modelBuilder.Entity<Clinic_Branch>().HasData(
+                new Clinic_Branch { Id_ClinicBranch = 1, Branch_Name = "Sucursal Principal" }
+            );
+
+            modelBuilder.Entity<AppointmentType>().HasData(
+                new AppointmentType { Id_Appoitment_Type = 1, Name_type = "Tipo de Cita Regular" }
+            );
+
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol { Id_Rol = 1, Name_Rol = "USER" }
+            );
+
+
             modelBuilder.Entity<Appointment>()
                 .HasOne(appointment => appointment.User)
                 .WithMany(user => user.Appointments)

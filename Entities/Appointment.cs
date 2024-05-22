@@ -9,7 +9,7 @@ namespace Entities
 {
     public class Appointment
     {
-        public int Id_Appoitment { get; set; }
+        public int Id_Appoitment { get; set; } 
         public bool Status { get; set; }
         public DateTime Date { get; set; }
      
@@ -17,14 +17,14 @@ namespace Entities
 
         //Relations
 
-        public int Id_ClinicBranch { get; set; }
-        public Clinic_Branch Clinic_Branch { get; set; }
+        public int? Id_ClinicBranch { get; set; }
+        public Clinic_Branch? Clinic_Branch { get; set; }
 
-        public int Id_Appoitment_Type { get; set; }
-        public AppointmentType AppointmentType { get; set; }
+        public int? Id_Appoitment_Type { get; set; }
+        public AppointmentType? AppointmentType { get; set; }
 
-        public int Id_User { get; set; }
+        public int? Id_User { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }
