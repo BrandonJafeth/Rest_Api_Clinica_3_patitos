@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Appointments;
+using static Services.Extensions.DtoMapping;
 
 namespace API_PruebaEF.Controllers
 {
@@ -16,16 +17,18 @@ namespace API_PruebaEF.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Appointment>> Get()
+        public async Task<IEnumerable<DtoAppointment>> Get()
         {
             return await _svAppointment.GetAllAppointments();
         }
 
         [HttpGet("{id}")]
-        public async Task<Appointment> Get(int id)
+        public async Task<DtoAppointment> Get(int id)
         {
             return await _svAppointment.GetAppointmentById(id);
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Appointment appointment)
