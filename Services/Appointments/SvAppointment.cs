@@ -226,6 +226,7 @@ namespace Services.Appointments
         }
 
 
+
         public async Task<DtoAppointment> ConvertToDto(Appointment appointment)
         {
             return new DtoAppointment

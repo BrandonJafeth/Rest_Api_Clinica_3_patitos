@@ -42,6 +42,20 @@ namespace API_PruebaEF.Controllers
             return Ok();
         }
 
+        [HttpPatch("cancel/{id}")]
+        public async Task<IActionResult> CancelAppointment(int id)
+        {
+            try
+            {
+                await _svAppointment.CancelAppointment(id, "USER");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
 
         [HttpDelete("{id}")]
