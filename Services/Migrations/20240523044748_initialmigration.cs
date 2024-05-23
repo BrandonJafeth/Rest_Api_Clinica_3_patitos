@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Services.Migrations
 {
     /// <inheritdoc />
@@ -60,18 +62,16 @@ namespace Services.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Id_Rol = table.Column<int>(type: "int", nullable: false),
-                    RolId_Rol = table.Column<int>(type: "int", nullable: false)
+                    Id_Rol = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id_User);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RolId_Rol",
-                        column: x => x.RolId_Rol,
+                        name: "FK_Users_Roles_Id_Rol",
+                        column: x => x.Id_Rol,
                         principalTable: "Roles",
-                        principalColumn: "Id_Rol",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_Rol");
                 });
 
             migrationBuilder.CreateTable(
@@ -80,15 +80,14 @@ namespace Services.Migrations
                 {
                     Id_Appoitment = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Id_ClinicBranch = table.Column<int>(type: "int", nullable: false),
-                    Clinic_BranchId_ClinicBranch = table.Column<int>(type: "int", nullable: false),
-                    Id_Appoitment_Type = table.Column<int>(type: "int", nullable: false),
-                    AppointmentTypeId_Appoitment_Type = table.Column<int>(type: "int", nullable: false),
-                    Id_User = table.Column<int>(type: "int", nullable: false),
-                    UserId_User = table.Column<int>(type: "int", nullable: false)
+                    Id_ClinicBranch = table.Column<int>(type: "int", nullable: true),
+                    Clinic_BranchId_ClinicBranch = table.Column<int>(type: "int", nullable: true),
+                    Id_Appoitment_Type = table.Column<int>(type: "int", nullable: true),
+                    AppointmentTypeId_Appoitment_Type = table.Column<int>(type: "int", nullable: true),
+                    Id_User = table.Column<int>(type: "int", nullable: true),
+                    UserId_User = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -113,6 +112,36 @@ namespace Services.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AppointmentTypes",
+                columns: new[] { "Id_Appoitment_Type", "Name_type" },
+                values: new object[,]
+                {
+                    { 2, "General Medicine" },
+                    { 3, "Dentistry" },
+                    { 4, "Pediatrics" },
+                    { 5, "Neurology" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Clinic_Branches",
+                columns: new[] { "Id_ClinicBranch", "Branch_Name" },
+                values: new object[,]
+                {
+                    { 2, "Under Loch Ness" },
+                    { 3, "San Martin" },
+                    { 4, "Brasilito" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id_Rol", "Name_Rol" },
+                values: new object[,]
+                {
+                    { 1, "USER" },
+                    { 2, "ADMIN" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_AppointmentTypeId_Appoitment_Type",
                 table: "Appointments",
@@ -129,9 +158,9 @@ namespace Services.Migrations
                 column: "UserId_User");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RolId_Rol",
+                name: "IX_Users_Id_Rol",
                 table: "Users",
-                column: "RolId_Rol");
+                column: "Id_Rol");
         }
 
         /// <inheritdoc />
