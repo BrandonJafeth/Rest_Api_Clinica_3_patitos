@@ -21,6 +21,7 @@ namespace Services.Appointments
         public Task<Appointment> UpdateAppointment(int id, Appointment appointment, string role);
         public Task DeleteAppointment(int id, string role);
 
+        Task CancelAppointment(int id, string role);
 
 
         public Task<DtoAppointment> ConvertToDto(Appointment appointment);
