@@ -84,8 +84,23 @@ namespace Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id_Appoitment_Type = 1,
-                            Name_type = "Tipo de Cita Regular"
+                            Id_Appoitment_Type = 2,
+                            Name_type = "General Medicine"
+                        },
+                        new
+                        {
+                            Id_Appoitment_Type = 3,
+                            Name_type = "Dentistry"
+                        },
+                        new
+                        {
+                            Id_Appoitment_Type = 4,
+                            Name_type = "Pediatrics"
+                        },
+                        new
+                        {
+                            Id_Appoitment_Type = 5,
+                            Name_type = "Neurology"
                         });
                 });
 
@@ -108,8 +123,18 @@ namespace Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id_ClinicBranch = 1,
-                            Branch_Name = "Sucursal Principal"
+                            Id_ClinicBranch = 2,
+                            Branch_Name = "Under Loch Ness"
+                        },
+                        new
+                        {
+                            Id_ClinicBranch = 3,
+                            Branch_Name = "San Martin"
+                        },
+                        new
+                        {
+                            Id_ClinicBranch = 4,
+                            Branch_Name = "Brasilito"
                         });
                 });
 
@@ -134,6 +159,11 @@ namespace Services.Migrations
                         {
                             Id_Rol = 1,
                             Name_Rol = "USER"
+                        },
+                        new
+                        {
+                            Id_Rol = 2,
+                            Name_Rol = "ADMIN"
                         });
                 });
 
