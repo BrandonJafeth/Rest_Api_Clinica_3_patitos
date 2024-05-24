@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Clinic_Branches;
+using static Services.Extensions.DtoMapping;
 
 namespace Res_Api_Clinica_3_patitos.Controllers
 {
@@ -17,15 +18,23 @@ namespace Res_Api_Clinica_3_patitos.Controllers
 
 
         [HttpGet()]
-        public async Task<IEnumerable<Clinic_Branch>> Get()
+        public async Task<IEnumerable<DtoClinicBranch>> Get()
         {
             return await _svClinic_Branch.GetAllClinic_Branch();
         }
 
         [HttpGet("{id}")]
-        public async Task<Clinic_Branch> Get(int id)
+        public async Task<ActionResult<DtoClinicBranch>> Get(int id)
         {
-            return await _svClinic_Branch.GetClinic_BranchById(id);
+            var clinicBranch = await _svClinic_Branch.GetClinic_BranchById(id);
+
+            if (clinicBranch == null)
+            {
+                return NotFound();
+            }
+
+            return clinicBranch;
         }
+
     }
 }

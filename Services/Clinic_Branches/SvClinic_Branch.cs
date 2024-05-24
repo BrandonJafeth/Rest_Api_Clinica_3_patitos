@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Services.Extensions.DtoMapping;
 
 namespace Services.Clinic_Branches
 {
@@ -19,14 +20,28 @@ namespace Services.Clinic_Branches
             _myDbContext = myDbContext;
         }
 
-        public async Task<List<Clinic_Branch>> GetAllClinic_Branch()
+        public async Task<List<DtoClinicBranch>> GetAllClinic_Branch()
         {
-            return await _myDbContext.Clinic_Branches.ToListAsync();
+            var clinicBranches = await _myDbContext.Clinic_Branches.ToListAsync();
+
+            return clinicBranches.Select(MapToDto).ToList();
         }
 
-        public async Task<Clinic_Branch> GetClinic_BranchById(int id)
+        public async Task<DtoClinicBranch> GetClinic_BranchById(int id)
         {
-            return await _myDbContext.Clinic_Branches.FindAsync(id);
+            var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(id);
+
+            return MapToDto(clinicBranch);
         }
+
+        private DtoClinicBranch MapToDto(Clinic_Branch clinicBranch)
+        {
+            return new DtoClinicBranch
+            {
+                Id_ClinicBranch = clinicBranch.Id_ClinicBranch,
+                Branch_Name = clinicBranch.Branch_Name
+            };
+        }
+
     }
 }

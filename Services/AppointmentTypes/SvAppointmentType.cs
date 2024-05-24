@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Services.Extensions.DtoMapping;
 
 namespace Services.AppointmentTypes
 {
@@ -18,16 +19,30 @@ namespace Services.AppointmentTypes
             _myDbContext = myDbContext;
         }
 
-        public async Task<AppointmentType> GetAppointmentTypeById(int id)
+        public async Task<DtoAppointmentType> GetAppointmentTypeById(int id)
         {
-            return await _myDbContext.AppointmentTypes
-                .SingleOrDefaultAsync(x => x.Id_Appoitment_Type== id);
+            var appointmentType = await _myDbContext.AppointmentTypes
+                .SingleOrDefaultAsync(x => x.Id_Appoitment_Type == id);
+
+            return MapToDto(appointmentType);
         }
 
-
-        public async Task<List<AppointmentType>> GetAllAppointmentType()
+        public async Task<List<DtoAppointmentType>> GetAllAppointmentType()
         {
-            return await _myDbContext.AppointmentTypes.ToListAsync();
+            var appointmentTypes = await _myDbContext.AppointmentTypes.ToListAsync();
+
+            return appointmentTypes.Select(MapToDto).ToList();
         }
+
+        private DtoAppointmentType MapToDto(AppointmentType appointmentType)
+        {
+            return new DtoAppointmentType
+            {
+                Id_Appoitment_Type = appointmentType.Id_Appoitment_Type,
+                Name_type = appointmentType.Name_type
+            };
+        }
+
     }
-}
+
+    }

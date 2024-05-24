@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Services.Extensions.DtoMapping;
 
 namespace Services.Clinic_Branches
 {
     public interface ISvClinic_Branch
     {
-        public Task<List<Clinic_Branch>> GetAllClinic_Branch();
-        public Task<Clinic_Branch> GetClinic_BranchById(int id);
+        public Task<List<DtoClinicBranch>> GetAllClinic_Branch();
+        public Task<DtoClinicBranch> GetClinic_BranchById(int id);
     }
+
 }

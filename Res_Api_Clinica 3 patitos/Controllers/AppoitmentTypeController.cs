@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Services.AppointmentTypes;
 using System.Data;
+using static Services.Extensions.DtoMapping;
 
 namespace Res_Api_Clinica_3_patitos.Controllers
 {
@@ -16,17 +17,26 @@ namespace Res_Api_Clinica_3_patitos.Controllers
             _svAppointmentType = svAppointmentType;
         }
 
-      
+
         [HttpGet()]
-        public async Task<IEnumerable<AppointmentType>> Get()
+        public async Task<IEnumerable<DtoAppointmentType>> Get()
         {
             return await _svAppointmentType.GetAllAppointmentType();
         }
+
         [HttpGet("{id}")]
-        public async Task<AppointmentType> Get(int id)
+        public async Task<ActionResult<DtoAppointmentType>> Get(int id)
         {
-            return await _svAppointmentType.GetAppointmentTypeById(id);
+            var appointmentType = await _svAppointmentType.GetAppointmentTypeById(id);
+
+            if (appointmentType == null)
+            {
+                return NotFound();
+            }
+
+            return appointmentType;
         }
+
 
     }
 }

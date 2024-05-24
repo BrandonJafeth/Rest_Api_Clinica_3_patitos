@@ -29,16 +29,16 @@ namespace API_PruebaEF.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Appointment appointment)
+        public async Task<IActionResult> Post([FromBody] DtoAddAppointment dtoAppointment)
         {
-            await _svAppointment.AddAppointments(new List<Appointment> { appointment }, "USER");
+            await _svAppointment.AddAppointments(new List<DtoAddAppointment> { dtoAppointment }, "USER");
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Appointment appointment)
+        public async Task<IActionResult> Put(int id, [FromBody] DtoAddAppointment dtoAppointment)
         {
-            await _svAppointment.UpdateAppointment(id, appointment, "USER");
+            await _svAppointment.UpdateAppointment(id, dtoAppointment, "USER");
             return Ok();
         }
 
