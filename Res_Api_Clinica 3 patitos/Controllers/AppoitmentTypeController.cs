@@ -16,6 +16,7 @@ namespace Res_Api_Clinica_3_patitos.Controllers
             _svAppointmentType = svAppointmentType;
         }
 
+      
         [HttpGet()]
         public async Task<IEnumerable<AppointmentType>> Get()
         {
@@ -27,24 +28,5 @@ namespace Res_Api_Clinica_3_patitos.Controllers
             return await _svAppointmentType.GetAppointmentTypeById(id);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AppointmentType appointmentType)
-        {
-            await _svAppointmentType.AddAppointmentType(new List<AppointmentType> { appointmentType });
-            return Ok();
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] AppointmentType appointmentType)
-        {
-            await _svAppointmentType.UpdateAppointmentType(id, appointmentType);
-            return Ok();
-        }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _svAppointmentType.DeleteAppointmentType(id);
-            return Ok();
-        }
     }
 }
