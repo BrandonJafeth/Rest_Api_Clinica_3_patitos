@@ -12,8 +12,8 @@ using Services.MyDbContext;
 namespace Services.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240521183549_Relation with role and user")]
-    partial class Relationwithroleanduser
+    [Migration("20240523044748_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,28 +33,28 @@ namespace Services.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Appoitment"));
 
-                    b.Property<int>("AppointmentTypeId_Appoitment_Type")
+                    b.Property<int?>("AppointmentTypeId_Appoitment_Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("Clinic_BranchId_ClinicBranch")
+                    b.Property<int?>("Clinic_BranchId_ClinicBranch")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id_Appoitment_Type")
+                    b.Property<int?>("Id_Appoitment_Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_ClinicBranch")
+                    b.Property<int?>("Id_ClinicBranch")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_User")
+                    b.Property<int?>("Id_User")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId_User")
+                    b.Property<int?>("UserId_User")
                         .HasColumnType("int");
 
                     b.HasKey("Id_Appoitment");
@@ -83,6 +83,28 @@ namespace Services.Migrations
                     b.HasKey("Id_Appoitment_Type");
 
                     b.ToTable("AppointmentTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id_Appoitment_Type = 2,
+                            Name_type = "General Medicine"
+                        },
+                        new
+                        {
+                            Id_Appoitment_Type = 3,
+                            Name_type = "Dentistry"
+                        },
+                        new
+                        {
+                            Id_Appoitment_Type = 4,
+                            Name_type = "Pediatrics"
+                        },
+                        new
+                        {
+                            Id_Appoitment_Type = 5,
+                            Name_type = "Neurology"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Clinic_Branch", b =>
@@ -100,6 +122,23 @@ namespace Services.Migrations
                     b.HasKey("Id_ClinicBranch");
 
                     b.ToTable("Clinic_Branches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id_ClinicBranch = 2,
+                            Branch_Name = "Under Loch Ness"
+                        },
+                        new
+                        {
+                            Id_ClinicBranch = 3,
+                            Branch_Name = "San Martin"
+                        },
+                        new
+                        {
+                            Id_ClinicBranch = 4,
+                            Branch_Name = "Brasilito"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Rol", b =>
@@ -117,6 +156,18 @@ namespace Services.Migrations
                     b.HasKey("Id_Rol");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id_Rol = 1,
+                            Name_Rol = "USER"
+                        },
+                        new
+                        {
+                            Id_Rol = 2,
+                            Name_Rol = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Entities.User", b =>
@@ -158,20 +209,17 @@ namespace Services.Migrations
                     b.HasOne("Entities.AppointmentType", "AppointmentType")
                         .WithMany("Appointments")
                         .HasForeignKey("AppointmentTypeId_Appoitment_Type")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Entities.Clinic_Branch", "Clinic_Branch")
                         .WithMany("Appointments")
                         .HasForeignKey("Clinic_BranchId_ClinicBranch")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Entities.User", "User")
                         .WithMany("Appointments")
                         .HasForeignKey("UserId_User")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AppointmentType");
 

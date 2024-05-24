@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Appointments;
+using static Services.Extensions.DtoMapping;
 
 namespace API_PruebaEF.Controllers
 {
@@ -16,13 +17,13 @@ namespace API_PruebaEF.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Appointment>> Get()
+        public async Task<IEnumerable<DtoAppointment>> Get()
         {
             return await _svAppointment.GetAllAppointments();
         }
 
         [HttpGet("{id}")]
-        public async Task<Appointment> Get(int id)
+        public async Task<DtoAppointment> Get(int id)
         {
             return await _svAppointment.GetAppointmentById(id);
         }
@@ -30,16 +31,32 @@ namespace API_PruebaEF.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Appointment appointment)
         {
-            await _svAppointment.AddAppointments(new List<Appointment> { appointment },"USER");
+            await _svAppointment.AddAppointments(new List<Appointment> { appointment }, "USER");
             return Ok();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Appointment appointment)
         {
-            await _svAppointment.UpdateAppointment(id, appointment,"USER");
+            await _svAppointment.UpdateAppointment(id, appointment, "USER");
             return Ok();
         }
+
+        [HttpPatch("cancel/{id}")]
+        public async Task<IActionResult> CancelAppointment(int id)
+        {
+            try
+            {
+                await _svAppointment.CancelAppointment(id, "USER");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

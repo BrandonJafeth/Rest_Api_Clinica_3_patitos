@@ -56,7 +56,9 @@ namespace Services.Users
 
         public async Task<List<User>> Get()
         {
-            List<User> list = await _context.Users.ToListAsync();
+            List<User> list = await _context.Users
+                .Include(x => x.Rol)
+                .ToListAsync();
 
             return list;
         }

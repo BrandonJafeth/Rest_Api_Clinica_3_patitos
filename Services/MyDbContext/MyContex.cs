@@ -47,16 +47,23 @@ namespace Services.MyDbContext
                 .HasForeignKey(e => e.Id_Rol)
                 .IsRequired(false);
 
-            modelBuilder.Entity<Clinic_Branch>().HasData(
-                new Clinic_Branch { Id_ClinicBranch = 1, Branch_Name = "Sucursal Principal" }
+            modelBuilder.Entity<AppointmentType>().HasData(
+                new AppointmentType { Id_Appoitment_Type = 2, Name_type = "General Medicine" },
+                new AppointmentType { Id_Appoitment_Type = 3, Name_type = "Dentistry" },
+                new AppointmentType { Id_Appoitment_Type = 4, Name_type = "Pediatrics" },
+                new AppointmentType { Id_Appoitment_Type = 5, Name_type = "Neurology" }
             );
 
-            modelBuilder.Entity<AppointmentType>().HasData(
-                new AppointmentType { Id_Appoitment_Type = 1, Name_type = "Tipo de Cita Regular" }
+            modelBuilder.Entity<Clinic_Branch>().HasData(
+                new Clinic_Branch { Id_ClinicBranch = 2, Branch_Name = "Under Loch Ness" },
+                new Clinic_Branch { Id_ClinicBranch = 3, Branch_Name = "San Martin" },
+                 new Clinic_Branch { Id_ClinicBranch = 4, Branch_Name = "Brasilito" }
             );
+   
 
             modelBuilder.Entity<Rol>().HasData(
-                new Rol { Id_Rol = 1, Name_Rol = "USER" }
+                new Rol { Id_Rol = 1, Name_Rol = "USER" },
+                new Rol { Id_Rol = 2, Name_Rol = "ADMIN" }
             );
 
 

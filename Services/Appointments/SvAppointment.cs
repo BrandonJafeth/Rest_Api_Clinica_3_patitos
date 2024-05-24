@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Services.Extensions.DtoMapping;
 
 namespace Services.Appointments
 {
@@ -20,23 +21,44 @@ namespace Services.Appointments
 
 
         // READS
-        public async Task<List<Appointment>> GetAllAppointments()
+        public async Task<List<DtoAppointment>> GetAllAppointments()
         {
-            return await _myDbContext.Appointments
+            var appointments = await _myDbContext.Appointments
                 .Include(x => x.User)
                 .Include(x => x.Clinic_Branch)
                 .Include(x => x.AppointmentType)
                 .ToListAsync();
+
+            var dtoAppointments = new List<DtoAppointment>();
+
+            foreach (var appointment in appointments)
+            {
+                var dtoAppointment = await ConvertToDto(appointment);
+                dtoAppointments.Add(dtoAppointment);
+            }
+
+            return dtoAppointments;
         }
 
-        public async Task<Appointment> GetAppointmentById(int id)
+
+        public async Task<DtoAppointment> GetAppointmentById(int id)
         {
-            return await _myDbContext.Appointments
+            var appointment = await _myDbContext.Appointments
                  .Include(x => x.User)
                  .Include(x => x.Clinic_Branch)
                  .Include(x => x.AppointmentType)
                  .SingleOrDefaultAsync(x => x.Id_Appoitment == id);
+
+            if (appointment == null)
+            {
+                throw new Exception("Appointment not found.");
+            }
+
+            return await ConvertToDto(appointment);
         }
+
+
+
 
         // WRITES
 
@@ -112,14 +134,6 @@ namespace Services.Appointments
                 throw new Exception("Only active appointments can be edited.");
             }
 
-            var currentTime = DateTime.Now;
-            var minimumCancellationTime = existingAppointment.Date.AddHours(-24);
-
-            if (currentTime >= minimumCancellationTime)
-            {
-                throw new Exception("You cannot edit the appointment with less than 24 hours notice.");
-            }
-
             // Check if the new date and time are available
             var isDateTimeAvailable = await IsDateTimeAvailable(appointment.Date);
 
@@ -129,8 +143,20 @@ namespace Services.Appointments
             }
 
             existingAppointment.Date = appointment.Date;
-            existingAppointment.Clinic_Branch = appointment.Clinic_Branch;
-            existingAppointment.AppointmentType = appointment.AppointmentType;
+
+            var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(appointment.Id_ClinicBranch);
+            if (clinicBranch == null)
+            {
+                throw new Exception("Clinic branch not found.");
+            }
+            existingAppointment.Clinic_Branch = clinicBranch;
+
+            var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(appointment.Id_Appoitment_Type);
+            if (appointmentType == null)
+            {
+                throw new Exception("Appointment type not found.");
+            }
+            existingAppointment.AppointmentType = appointmentType;
 
             if (appointment.Status == false)
             {
@@ -141,6 +167,7 @@ namespace Services.Appointments
 
             return existingAppointment;
         }
+
 
         public async Task DeleteAppointment(int id, string role)
         {
@@ -169,5 +196,53 @@ namespace Services.Appointments
 
             return existingAppointment == null;
         }
+
+
+        public async Task CancelAppointment(int id, string role)
+        {
+            if (role != "USER")
+            {
+                throw new Exception("Only users with role USER can cancel appointments.");
+            }
+
+            var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
+
+            if (existingAppointment == null)
+            {
+                throw new Exception("Appointment not found.");
+            }
+
+            var currentTime = DateTime.Now;
+            var minimumCancellationTime = existingAppointment.Date.AddHours(-24);
+
+            if (currentTime >= minimumCancellationTime)
+            {
+                throw new Exception("You cannot cancel the appointment with less than 24 hours notice.");
+            }
+
+            existingAppointment.Status = false;
+
+            await _myDbContext.SaveChangesAsync();
+        }
+
+
+
+        public async Task<DtoAppointment> ConvertToDto(Appointment appointment)
+        {
+            return new DtoAppointment
+            {
+                Id_Appointment = appointment.Id_Appoitment,
+                Name_type = appointment.AppointmentType.Name_type,
+                Branch_Name = appointment.Clinic_Branch.Branch_Name,
+                Status = appointment.Status,
+                Date = DateTime.Parse(appointment.Date.ToString("yyyy-MM-dd HH:mm")),
+                User_Name = appointment.User.User_Name
+            };
+        }
+
+
+
+
+
     }
 }
