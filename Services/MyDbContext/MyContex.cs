@@ -21,7 +21,8 @@ namespace Services.MyDbContext
         public DbSet<User> Users { get; set; }
         public DbSet<AppointmentType> AppointmentTypes { get; set; }
         public DbSet<Clinic_Branch> Clinic_Branches { get; set; }
-        public DbSet<Rol> Roles { get; set; }
+        public DbSet<Rol> Roles { get; set; } 
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
