@@ -62,18 +62,20 @@ namespace Services.Appointments
 
         // WRITES
 
-        public async Task<List<Appointment>> AddAppointments(List<Appointment> appointments, string role)
+        public async Task<List<DtoAddAppointment>> AddAppointments(List<DtoAddAppointment> dtoAppointments, string role)
         {
             if (role != "USER")
             {
                 throw new Exception("Only users with role USER can create appointments.");
             }
 
-            foreach (var appointment in appointments)
+            var addedAppointments = new List<DtoAddAppointment>();
+
+            foreach (var dtoAppointment in dtoAppointments)
             {
-                var user = await _myDbContext.Users.FindAsync(appointment.Id_User);
-                var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(appointment.Id_ClinicBranch);
-                var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(appointment.Id_Appoitment_Type);
+                var user = await _myDbContext.Users.FindAsync(dtoAppointment.Id_User);
+                var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(dtoAppointment.Id_ClinicBranch);
+                var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(dtoAppointment.Id_Appoitment_Type);
 
                 if (user == null)
                 {
@@ -90,32 +92,42 @@ namespace Services.Appointments
                     throw new Exception("Appointment type not found.");
                 }
 
-                // Buscar la última cita del usuario
                 var lastAppointment = await _myDbContext.Appointments
-                    .Where(x => x.Id_User == appointment.Id_User && x.Date.Date == appointment.Date.Date)
-                    .FirstOrDefaultAsync();
+               .Where(x => x.Id_User == dtoAppointment.Id_User && x.Date == dtoAppointment.Date)
+               .FirstOrDefaultAsync();
 
-                // Comprobar si ha pasado suficiente tiempo desde la última cita
+
                 if (lastAppointment != null)
                 {
                     throw new Exception("You cannot create another appointment for the same user on the same day.");
                 }
 
-                // Asignar el usuario, la clínica y el tipo de cita a la cita
-                appointment.User = user;
-                appointment.Clinic_Branch = clinicBranch;
-                appointment.AppointmentType = appointmentType;
+                var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date);
+                if (!isDateTimeAvailable)
+                {
+                    throw new Exception("The selected date and time are not available.");
+                }
+
+                var appointment = new Appointment
+                {
+                    Status = dtoAppointment.Status,
+                    Date = dtoAppointment.Date,
+                    User = user,
+                    Clinic_Branch = clinicBranch,
+                    AppointmentType = appointmentType
+                };
 
                 _myDbContext.Appointments.Add(appointment);
                 await _myDbContext.SaveChangesAsync();
+
+                dtoAppointment.Id_Appointment = appointment.Id_Appoitment;
+                addedAppointments.Add(dtoAppointment);
             }
 
-            return appointments;
+            return addedAppointments;
         }
 
-
-
-        public async Task<Appointment> UpdateAppointment(int id, Appointment appointment, string role)
+        public async Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment dtoAppointment, string role)
         {
             if (role != "USER")
             {
@@ -134,38 +146,45 @@ namespace Services.Appointments
                 throw new Exception("Only active appointments can be edited.");
             }
 
-            // Check if the new date and time are available
-            var isDateTimeAvailable = await IsDateTimeAvailable(appointment.Date);
+            existingAppointment.Date = dtoAppointment.Date;
 
-            if (!isDateTimeAvailable)
-            {
-                throw new Exception("The selected date and time are not available.");
-            }
-
-            existingAppointment.Date = appointment.Date;
-
-            var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(appointment.Id_ClinicBranch);
+            var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(dtoAppointment.Id_ClinicBranch);
             if (clinicBranch == null)
             {
                 throw new Exception("Clinic branch not found.");
             }
             existingAppointment.Clinic_Branch = clinicBranch;
 
-            var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(appointment.Id_Appoitment_Type);
+            var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(dtoAppointment.Id_Appoitment_Type);
             if (appointmentType == null)
             {
                 throw new Exception("Appointment type not found.");
             }
             existingAppointment.AppointmentType = appointmentType;
 
-            if (appointment.Status == false)
+            var user = await _myDbContext.Users.FindAsync(dtoAppointment.Id_User);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+            existingAppointment.User = user;
+
+            if (dtoAppointment.Status == false)
             {
                 existingAppointment.Status = false;
             }
 
+            var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date);
+            if (!isDateTimeAvailable)
+            {
+                throw new Exception("The selected date and time are not available.");
+            }
+
+            existingAppointment.Date = dtoAppointment.Date;
+
             await _myDbContext.SaveChangesAsync();
 
-            return existingAppointment;
+            return ConvertToAddDto(existingAppointment);
         }
 
 
@@ -239,6 +258,42 @@ namespace Services.Appointments
                 User_Name = appointment.User.User_Name
             };
         }
+
+
+        public DtoAddAppointment ConvertToAddDto(Appointment appointment)
+        {
+
+            if (appointment == null)
+            {
+                throw new Exception("La cita es nula.");
+            }
+
+            if (appointment.Clinic_Branch == null)
+            {
+                throw new Exception("La sucursal de la clínica es nula.");
+            }
+
+            if (appointment.AppointmentType == null)
+            {
+                throw new Exception("El tipo de cita es nulo.");
+            }
+
+            if (appointment.User == null)
+            {
+                throw new Exception("El usuario es nulo.");
+            }
+
+            return new DtoAddAppointment
+            {
+                Id_Appointment = appointment.Id_Appoitment,
+                Status = appointment.Status,
+                Date = DateTime.Parse(appointment.Date.ToString("yyyy-MM-dd HH:mm")),
+                Id_ClinicBranch = appointment.Clinic_Branch.Id_ClinicBranch,
+                Id_Appoitment_Type = appointment.AppointmentType.Id_Appoitment_Type,
+                Id_User = appointment.User.Id_User
+            };
+        }
+
 
 
 

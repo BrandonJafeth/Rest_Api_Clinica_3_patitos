@@ -30,7 +30,35 @@ namespace Services.Extensions
             public DateTime Date { get; set; }
             public string User_Name { get; set; }
         }
+
+
+        public class DtoClinicBranch
+        {
+            public int Id_ClinicBranch { get; set; }
+            public string Branch_Name { get; set; }
+        }
+
+        public class DtoAppointmentType
+        {
+            public int Id_Appoitment_Type { get; set; }
+            public string Name_type { get; set; }
+        }
+
+
+
+        public class DtoAddAppointment
+        {
+            public int Id_Appointment { get; set; }
+            public bool Status { get; set; }
+            public DateTime Date { get; set; }
+            public int Id_ClinicBranch { get; set; }
+            public int Id_Appoitment_Type { get; set; }
+            public int Id_User { get; set; }
+        }
+    
+            
+        }
     }
-}
+
 
 

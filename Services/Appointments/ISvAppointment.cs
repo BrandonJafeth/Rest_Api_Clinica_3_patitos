@@ -17,8 +17,8 @@ namespace Services.Appointments
 
 
         //WRITES
-        public Task<List<Appointment>> AddAppointments(List<Appointment> appointments, string role);
-        public Task<Appointment> UpdateAppointment(int id, Appointment appointment, string role);
+        public Task<List<DtoAddAppointment>> AddAppointments(List<DtoAddAppointment> appointments, string role);
+        public Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment appointment, string role);
         public Task DeleteAppointment(int id, string role);
 
         Task CancelAppointment(int id, string role);
