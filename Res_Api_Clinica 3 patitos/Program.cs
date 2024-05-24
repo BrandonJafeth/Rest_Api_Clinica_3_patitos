@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Services.Appointments;
+using Services.AppointmentTypes;
+using Services.Clinic_Branches;
 using Services.MyDbContext;
 using Services.Users;
 using System.Text;
@@ -51,6 +53,8 @@ builder.Services.AddDbContext<MyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ISvAppointment, SvAppointment>();
+builder.Services.AddScoped<ISvClinic_Branch, SvClinic_Branch>();
+builder.Services.AddScoped<ISvAppointmentType, SvAppointmentType>();
 builder.Services.AddScoped<ISvUser, SvUser>();
 
 builder.Services.AddControllers();
