@@ -64,5 +64,14 @@ namespace API_PruebaEF.Controllers
             await _svAppointment.DeleteAppointment(id, "admin");
             return Ok();
         }
+
+        [HttpGet("user/{User_Name}")]
+        public async Task<IEnumerable<DtoAppointment>> GetAppointmentsByUserName(string User_Name)
+        {
+            return await _svAppointment.GetAppointmentsByUserName(User_Name);
+        }
+
+
     }
 }
+

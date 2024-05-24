@@ -24,6 +24,7 @@ namespace Services.Appointments
         public async Task<List<DtoAppointment>> GetAllAppointments()
         {
             var appointments = await _myDbContext.Appointments
+                .OrderByDescending(x => x.Id_Appoitment)
                 .Include(x => x.User)
                 .Include(x => x.Clinic_Branch)
                 .Include(x => x.AppointmentType)
@@ -58,6 +59,30 @@ namespace Services.Appointments
         }
 
 
+        public async Task<List<DtoAppointment>> GetAppointmentsByUserName(string User_name)
+        {
+            var appointments = await _myDbContext.Appointments
+                .Include(x => x.User)
+                .Include(x => x.Clinic_Branch)
+                .Include(x => x.AppointmentType)
+                .Where(x => x.User != null && x.User.User_Name == User_name)
+                .ToListAsync();
+
+            if (appointments.Count == 0)
+            {
+                throw new Exception("No se encontraron citas para el usuario especificado.");
+            }
+
+            var dtoAppointments = new List<DtoAppointment>();
+
+            foreach (var appointment in appointments)
+            {
+                var dtoAppointment = await ConvertToDto(appointment);
+                dtoAppointments.Add(dtoAppointment);
+            }
+
+            return dtoAppointments;
+        }
 
 
         // WRITES

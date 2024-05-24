@@ -16,6 +16,9 @@ namespace Services.Appointments
         public Task<DtoAppointment> GetAppointmentById(int id);
 
 
+        public Task<List<DtoAppointment>> GetAppointmentsByUserName(string User_name);
+
+
         //WRITES
         public Task<List<DtoAddAppointment>> AddAppointments(List<DtoAddAppointment> appointments, string role);
         public Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment appointment, string role);
