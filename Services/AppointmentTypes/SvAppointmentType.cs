@@ -21,7 +21,6 @@ namespace Services.AppointmentTypes
         public async Task<AppointmentType> GetAppointmentTypeById(int id)
         {
             return await _myDbContext.AppointmentTypes
-                .Include(x => x.Appointments)
                 .SingleOrDefaultAsync(x => x.Id_Appoitment_Type== id);
         }
 

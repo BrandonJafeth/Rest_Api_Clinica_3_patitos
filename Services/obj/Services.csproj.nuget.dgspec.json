@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Services\\Services.csproj": {}
+    "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Entities\\Entities.csproj": {
+    "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Entities\\Entities.csproj",
+        "projectUniqueName": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Entities\\Entities.csproj",
         "projectName": "Entities",
-        "projectPath": "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Entities\\Entities.csproj",
-        "packagesPath": "C:\\Users\\Estudiantes UNA.N00158588\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Estudiantes UNA.N00158588\\Source\\Repos\\Rest_Api_Clinica_3_patitos\\Entities\\obj\\",
+        "projectPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Entities\\Entities.csproj",
+        "packagesPath": "C:\\Users\\brand\\.nuget\\packages\\",
+        "outputPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Entities\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Estudiantes UNA.N00158588\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\brand\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -55,6 +60,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.18, 7.0.18]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.18, 7.0.18]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.18, 7.0.18]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -64,17 +83,21 @@
         }
       }
     },
-    "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Services\\Services.csproj": {
+    "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Services\\Services.csproj",
+        "projectUniqueName": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\Services.csproj",
         "projectName": "Services",
-        "projectPath": "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Services\\Services.csproj",
-        "packagesPath": "C:\\Users\\Estudiantes UNA.N00158588\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Services\\obj\\",
+        "projectPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\Services.csproj",
+        "packagesPath": "C:\\Users\\brand\\.nuget\\packages\\",
+        "outputPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Services\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Estudiantes UNA.N00158588\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\brand\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,14 +105,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\Users\\Estudiantes UNA.N00158588\\source\\repos\\Rest_Api_Clinica_3_patitos\\Entities\\Entities.csproj"
+              "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\UNA\\Progra IV\\Proyecto_Api\\Res_Api_Clinica 3 patitos\\Entities\\Entities.csproj"
               }
             }
           }
@@ -149,6 +173,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.18, 7.0.18]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.18, 7.0.18]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.18, 7.0.18]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
