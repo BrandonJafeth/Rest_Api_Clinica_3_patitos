@@ -70,7 +70,8 @@ namespace Services.Appointments
 
             if (appointments.Count == 0)
             {
-                throw new Exception("No se encontraron citas para el usuario especificado.");
+                throw new Exception("No appointments found for the specified user.");
+
             }
 
             var dtoAppointments = new List<DtoAppointment>();
