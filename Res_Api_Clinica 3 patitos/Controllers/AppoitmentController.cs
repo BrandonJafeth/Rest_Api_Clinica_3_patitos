@@ -28,6 +28,13 @@ namespace API_PruebaEF.Controllers
             return await _svAppointment.GetAppointmentById(id);
         }
 
+
+        [HttpGet("user/{userId}")]
+        public async Task<IEnumerable<DtoAppointment>> GetAppointmentsByUserId(int userId)
+        {
+            return await _svAppointment.GetAppointmentsByUserId(userId);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DtoAddAppointment dtoAppointment)
         {
@@ -65,11 +72,9 @@ namespace API_PruebaEF.Controllers
             return Ok();
         }
 
-        [HttpGet("user/{User_Name}")]
-        public async Task<IEnumerable<DtoAppointment>> GetAppointmentsByUserName(string User_Name)
-        {
-            return await _svAppointment.GetAppointmentsByUserName(User_Name);
-        }
+
+
+
 
 
     }

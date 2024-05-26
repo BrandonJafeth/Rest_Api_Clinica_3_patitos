@@ -59,19 +59,18 @@ namespace Services.Appointments
         }
 
 
-        public async Task<List<DtoAppointment>> GetAppointmentsByUserName(string User_name)
+        public async Task<List<DtoAppointment>> GetAppointmentsByUserId(int userId)
         {
             var appointments = await _myDbContext.Appointments
                 .Include(x => x.User)
                 .Include(x => x.Clinic_Branch)
                 .Include(x => x.AppointmentType)
-                .Where(x => x.User != null && x.User.User_Name == User_name)
+                .Where(x => x.User != null && x.User.Id_User == userId)
                 .ToListAsync();
 
             if (appointments.Count == 0)
             {
                 throw new Exception("No appointments found for the specified user.");
-
             }
 
             var dtoAppointments = new List<DtoAppointment>();
@@ -84,6 +83,7 @@ namespace Services.Appointments
 
             return dtoAppointments;
         }
+
 
 
         // WRITES
