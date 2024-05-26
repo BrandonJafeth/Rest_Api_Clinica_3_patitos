@@ -66,12 +66,36 @@ namespace Services.Appointments
                 .Include(x => x.Clinic_Branch)
                 .Include(x => x.AppointmentType)
                 .Where(x => x.User != null && x.User.Id_User == userId)
+                .OrderBy(x => x.Date)
                 .ToListAsync();
 
             if (appointments.Count == 0)
             {
                 throw new Exception("No appointments found for the specified user.");
             }
+
+            var dtoAppointments = new List<DtoAppointment>();
+
+            foreach (var appointment in appointments)
+            {
+                var dtoAppointment = await ConvertToDto(appointment);
+                dtoAppointments.Add(dtoAppointment);
+            }
+
+            return dtoAppointments;
+        }
+
+        public async Task<List<DtoAppointment>> GetAppointmentsForToday()
+        {
+            var today = DateTime.Today;
+
+
+            var appointments = await _myDbContext.Appointments
+                .Include(x => x.User)
+                .Include(x => x.Clinic_Branch)
+                .Include(x => x.AppointmentType)
+                .Where(x => x.Date.Date == today)
+                .ToListAsync();
 
             var dtoAppointments = new List<DtoAppointment>();
 
@@ -119,7 +143,7 @@ namespace Services.Appointments
                 }
 
                 var lastAppointment = await _myDbContext.Appointments
-               .Where(x => x.Id_User == dtoAppointment.Id_User && x.Date == dtoAppointment.Date)
+               .Where(x => x.Id_User == dtoAppointment.Id_User && x.Date.Date == dtoAppointment.Date.Date)
                .FirstOrDefaultAsync();
 
 
@@ -128,7 +152,8 @@ namespace Services.Appointments
                     throw new Exception("You cannot create another appointment for the same user on the same day.");
                 }
 
-                var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date);
+                var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date, dtoAppointment.Id_User);
+
                 if (!isDateTimeAvailable)
                 {
                     throw new Exception("The selected date and time are not available.");
@@ -200,7 +225,8 @@ namespace Services.Appointments
                 existingAppointment.Status = false;
             }
 
-            var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date);
+            var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date, dtoAppointment.Id_User);
+
             if (!isDateTimeAvailable)
             {
                 throw new Exception("The selected date and time are not available.");
@@ -233,14 +259,22 @@ namespace Services.Appointments
         }
 
         // PRIVATE METHODS for updating appointments
-        private async Task<bool> IsDateTimeAvailable(DateTime date)
+        private async Task<bool> IsDateTimeAvailable(DateTime date, int userId)
         {
-            // Check if any appointment already exists for the same date
-            var existingAppointment = await _myDbContext.Appointments
-                .SingleOrDefaultAsync(x => x.Date.Date == date.Date);
+            // Obtiene todas las citas para la misma fecha
+            var appointmentsOnSameDay = await _myDbContext.Appointments
+                .Where(x => x.Date.Date == date.Date && x.User.Id_User == userId)
+                .ToListAsync();
 
-            return existingAppointment == null;
+            // Filtra las citas en memoria para encontrar las que están dentro de una hora de la hora proporcionada
+            var overlappingAppointment = appointmentsOnSameDay
+                .FirstOrDefault(x => Math.Abs((x.Date - date).TotalHours) < 1);
+
+            return overlappingAppointment == null;
         }
+
+
+
 
 
         public async Task CancelAppointment(int id, string role)

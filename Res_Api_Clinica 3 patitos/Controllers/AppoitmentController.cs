@@ -35,6 +35,13 @@ namespace API_PruebaEF.Controllers
             return await _svAppointment.GetAppointmentsByUserId(userId);
         }
 
+        [HttpGet("today")]
+        public async Task<IEnumerable<DtoAppointment>> GetAppointmentsForToday()
+        {
+            return await _svAppointment.GetAppointmentsForToday();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DtoAddAppointment dtoAppointment)
         {
