@@ -108,16 +108,26 @@ namespace Services.Appointments
             return dtoAppointments;
         }
 
+        public async Task<List<DateTime>> GetAppointmentDates()
+        {
+            var today = DateTime.Today;
+            var sevenDaysFromNow = today.AddDays(7);
 
+            var appointmentDates = await _myDbContext.Appointments
+                .Where(x => x.Date.Date >= today && x.Date.Date <= sevenDaysFromNow)
+                .Select(x => new DateTime(x.Date.Year, x.Date.Month, x.Date.Day, x.Date.Hour, x.Date.Minute, 0))
+                .ToListAsync();
+
+            return appointmentDates;
+        }
+
+  
 
         // WRITES
 
-        public async Task<List<DtoAddAppointment>> AddAppointments(List<DtoAddAppointment> dtoAppointments, string role)
+        public async Task<List<DtoAddAppointment>> AddAppointments(List<DtoAddAppointment> dtoAppointments)
         {
-            if (role != "USER")
-            {
-                throw new Exception("Only users with role USER can create appointments.");
-            }
+
 
             var addedAppointments = new List<DtoAddAppointment>();
 
@@ -178,12 +188,9 @@ namespace Services.Appointments
             return addedAppointments;
         }
 
-        public async Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment dtoAppointment, string role)
+        public async Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment dtoAppointment)
         {
-            if (role != "USER")
-            {
-                throw new Exception("Only users with role USER can update appointments.");
-            }
+   
 
             var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
 

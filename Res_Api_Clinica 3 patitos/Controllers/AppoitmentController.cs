@@ -16,6 +16,7 @@ namespace API_PruebaEF.Controllers
             _svAppointment = svAppointment;
         }
 
+        // READ
         [HttpGet]
         public async Task<IEnumerable<DtoAppointment>> Get()
         {
@@ -41,18 +42,25 @@ namespace API_PruebaEF.Controllers
             return await _svAppointment.GetAppointmentsForToday();
         }
 
+        [HttpGet("dates")]
+        public async Task<IEnumerable<DateTime>> GetAppointmentDates()
+        {
+            return await _svAppointment.GetAppointmentDates();
+        }
 
+
+        // WRITE
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DtoAddAppointment dtoAppointment)
         {
-            await _svAppointment.AddAppointments(new List<DtoAddAppointment> { dtoAppointment }, "USER");
+            await _svAppointment.AddAppointments(new List<DtoAddAppointment> { dtoAppointment });
             return Ok();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] DtoAddAppointment dtoAppointment)
         {
-            await _svAppointment.UpdateAppointment(id, dtoAppointment, "USER");
+            await _svAppointment.UpdateAppointment(id, dtoAppointment);
             return Ok();
         }
 

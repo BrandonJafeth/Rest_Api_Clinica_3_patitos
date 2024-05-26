@@ -15,14 +15,20 @@ namespace Services.Appointments
         public Task<List<DtoAppointment>> GetAllAppointments();
         public Task<DtoAppointment> GetAppointmentById(int id);
 
-        public Task<List<DtoAppointment>> GetAppointmentsByUserId(int userId);
+        public Task<List<DtoAppointment>> GetAppointmentsByUserId(int UserId);
 
         Task<List<DtoAppointment>> GetAppointmentsForToday();
 
 
+        public Task<List<DateTime>> GetAppointmentDates();
+
+
+
+
+
         //WRITES
-        public Task<List<DtoAddAppointment>> AddAppointments(List<DtoAddAppointment> appointments, string role);
-        public Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment appointment, string role);
+        public Task<List<DtoAddAppointment>> AddAppointments(List<DtoAddAppointment> appointments);
+        public Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment appointment);
         public Task DeleteAppointment(int id, string role);
 
         Task CancelAppointment(int id, string role);
