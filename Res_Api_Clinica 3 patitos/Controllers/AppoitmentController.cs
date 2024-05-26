@@ -69,7 +69,7 @@ namespace API_PruebaEF.Controllers
         {
             try
             {
-                await _svAppointment.CancelAppointment(id, "USER");
+                await _svAppointment.CancelAppointment(id);
                 return NoContent();
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace API_PruebaEF.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _svAppointment.DeleteAppointment(id, "admin");
+            await _svAppointment.DeleteAppointment(id);
             return Ok();
         }
 

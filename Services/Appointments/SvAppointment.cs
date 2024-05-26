@@ -247,12 +247,8 @@ namespace Services.Appointments
         }
 
 
-        public async Task DeleteAppointment(int id, string role)
+        public async Task DeleteAppointment(int id)
         {
-            if (role != "admin")
-            {
-                throw new Exception("Only admin users can delete appointments.");
-            }
 
             var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
 
@@ -284,12 +280,9 @@ namespace Services.Appointments
 
 
 
-        public async Task CancelAppointment(int id, string role)
+        public async Task CancelAppointment(int id)
         {
-            if (role != "USER")
-            {
-                throw new Exception("Only users with role USER can cancel appointments.");
-            }
+     
 
             var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
 
