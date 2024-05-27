@@ -1,5 +1,7 @@
 ﻿using Entities;
+using MailKit.Net.Smtp;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
 using Services.MyDbContext;
 using System;
 using System.Collections.Generic;
@@ -183,6 +185,50 @@ namespace Services.Appointments
 
                 dtoAppointment.Id_Appointment = appointment.Id_Appoitment;
                 addedAppointments.Add(dtoAppointment);
+
+                // Enviar correo electrónico con los detalles de la cita
+                appointment = await _myDbContext.Appointments
+                    .Include(a => a.User)
+                    .Include(a => a.Clinic_Branch)
+                    .FirstOrDefaultAsync(a => a.Id_Appoitment == appointment.Id_Appoitment);
+
+                //Dont change email , its the email that send the confirmation mail and have an app password 
+                try
+                {
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Cilinica Three Duckling", "paulafernandezmarchena031@gmail.com"));
+                    message.To.Add(new MailboxAddress("", appointment.User.Email));
+                    message.Subject = "Medical Appointment Confirmation";
+
+                    var body = new TextPart("plain")
+                    {
+                        Text = $"Dear {appointment.User.User_Name},\n\n" +
+                  $"Your appointment has been scheduled for {appointment.Date}.\n" +
+                  $"Appoitment Details:\n" +
+                  $"- Clinic Branch {appointment.Clinic_Branch.Branch_Name}\n" +
+                  $"- Specialty: {appointment.AppointmentType.Name_type}\n\n" +
+                  "Gracias por elegir nuestra clínica."
+                    };
+
+                    message.Body = body;
+
+
+                    using (var client = new SmtpClient())
+                    {
+
+                        await client.ConnectAsync("smtp.gmail.com", 587, false);
+
+                        await client.AuthenticateAsync("paulafernandezmarchena031@gmail.com", "srny jbgf flmg movi");
+
+                        await client.SendAsync(message);
+
+                        await client.DisconnectAsync(true);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al enviar el correo electrónico .", ex);
+                }
             }
 
             return addedAppointments;
