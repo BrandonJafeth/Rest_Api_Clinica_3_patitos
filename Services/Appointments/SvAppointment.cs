@@ -358,7 +358,9 @@ namespace Services.Appointments
             {
                 Id_Appointment = appointment.Id_Appoitment,
                 Name_type = appointment.AppointmentType.Name_type,
+                Id_Appoitment_Type = appointment.AppointmentType.Id_Appoitment_Type,
                 Branch_Name = appointment.Clinic_Branch.Branch_Name,
+                Id_ClinicBranch = appointment.Clinic_Branch.Id_ClinicBranch,
                 Status = appointment.Status,
                 Date = DateTime.Parse(appointment.Date.ToString("yyyy-MM-dd HH:mm")),
                 User_Name = appointment.User.User_Name
