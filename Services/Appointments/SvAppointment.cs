@@ -196,7 +196,7 @@ namespace Services.Appointments
                 try
                 {
                     var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Cilinica Three Duckling", "paulafernandezmarchena031@gmail.com"));
+                    message.From.Add(new MailboxAddress("Cilinic Three Duckling", "paulafernandezmarchena031@gmail.com"));
                     message.To.Add(new MailboxAddress("", appointment.User.Email));
                     message.Subject = "Medical Appointment Confirmation";
 
@@ -207,7 +207,7 @@ namespace Services.Appointments
                   $"Appoitment Details:\n" +
                   $"- Clinic Branch {appointment.Clinic_Branch.Branch_Name}\n" +
                   $"- Specialty: {appointment.AppointmentType.Name_type}\n\n" +
-                  "Gracias por elegir nuestra clínica."
+                  "Thanks for choosing us."
                     };
 
                     message.Body = body;
