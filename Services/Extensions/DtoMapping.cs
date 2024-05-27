@@ -25,7 +25,12 @@ namespace Services.Extensions
         {
             public int Id_Appointment { get; set; }
             public string Name_type { get; set; }
+
+            public int Id_Appoitment_Type { get; set; }
             public string Branch_Name { get; set; }
+
+            public int Id_ClinicBranch { get; set; }
+
             public bool Status { get; set; }
             public DateTime Date { get; set; }
             public string User_Name { get; set; }
