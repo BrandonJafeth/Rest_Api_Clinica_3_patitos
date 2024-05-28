@@ -12,7 +12,7 @@ using Services.MyDbContext;
 namespace Services.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240523044748_initialmigration")]
+    [Migration("20240528181517_initialmigration")]
     partial class initialmigration
     {
         /// <inheritdoc />
@@ -87,22 +87,22 @@ namespace Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id_Appoitment_Type = 2,
+                            Id_Appoitment_Type = 1,
                             Name_type = "General Medicine"
                         },
                         new
                         {
-                            Id_Appoitment_Type = 3,
+                            Id_Appoitment_Type = 2,
                             Name_type = "Dentistry"
                         },
                         new
                         {
-                            Id_Appoitment_Type = 4,
+                            Id_Appoitment_Type = 3,
                             Name_type = "Pediatrics"
                         },
                         new
                         {
-                            Id_Appoitment_Type = 5,
+                            Id_Appoitment_Type = 4,
                             Name_type = "Neurology"
                         });
                 });
@@ -126,17 +126,17 @@ namespace Services.Migrations
                     b.HasData(
                         new
                         {
-                            Id_ClinicBranch = 2,
+                            Id_ClinicBranch = 1,
                             Branch_Name = "Under Loch Ness"
                         },
                         new
                         {
-                            Id_ClinicBranch = 3,
+                            Id_ClinicBranch = 2,
                             Branch_Name = "San Martin"
                         },
                         new
                         {
-                            Id_ClinicBranch = 4,
+                            Id_ClinicBranch = 3,
                             Branch_Name = "Brasilito"
                         });
                 });

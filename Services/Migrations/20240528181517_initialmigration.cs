@@ -117,10 +117,10 @@ namespace Services.Migrations
                 columns: new[] { "Id_Appoitment_Type", "Name_type" },
                 values: new object[,]
                 {
-                    { 2, "General Medicine" },
-                    { 3, "Dentistry" },
-                    { 4, "Pediatrics" },
-                    { 5, "Neurology" }
+                    { 1, "General Medicine" },
+                    { 2, "Dentistry" },
+                    { 3, "Pediatrics" },
+                    { 4, "Neurology" }
                 });
 
             migrationBuilder.InsertData(
@@ -128,9 +128,9 @@ namespace Services.Migrations
                 columns: new[] { "Id_ClinicBranch", "Branch_Name" },
                 values: new object[,]
                 {
-                    { 2, "Under Loch Ness" },
-                    { 3, "San Martin" },
-                    { 4, "Brasilito" }
+                    { 1, "Under Loch Ness" },
+                    { 2, "San Martin" },
+                    { 3, "Brasilito" }
                 });
 
             migrationBuilder.InsertData(
