@@ -57,12 +57,13 @@ namespace API_PruebaEF.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] DtoAddAppointment dtoAppointment)
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<DtoUpdateAppointment>> Patch(int id, [FromBody] DtoUpdateAppointment dtoAppointment)
         {
-            await _svAppointment.UpdateAppointment(id, dtoAppointment);
-            return Ok();
+            var updatedAppointment = await _svAppointment.UpdateAppointment(id, dtoAppointment);
+            return Ok(updatedAppointment);
         }
+
 
         [HttpPatch("cancel/{id}")]
         public async Task<IActionResult> CancelAppointment(int id)

@@ -60,10 +60,16 @@ namespace Services.Extensions
             public int Id_Appoitment_Type { get; set; }
             public int Id_User { get; set; }
         }
-    
-            
+        public class DtoUpdateAppointment
+        {
+            public DateTime? Date { get; set; }
+            public int? Id_ClinicBranch { get; set; }
+            public int? Id_Appoitment_Type { get; set; }
         }
+
+
     }
+}
 
 
 
