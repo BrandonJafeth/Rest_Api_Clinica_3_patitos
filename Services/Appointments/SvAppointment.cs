@@ -234,10 +234,8 @@ namespace Services.Appointments
             return addedAppointments;
         }
 
-        public async Task<DtoAddAppointment> UpdateAppointment(int id, DtoAddAppointment dtoAppointment)
+        public async Task<DtoUpdateAppointment> UpdateAppointment(int id, DtoUpdateAppointment dtoAppointment)
         {
-   
-
             var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
 
             if (existingAppointment == null)
@@ -250,46 +248,41 @@ namespace Services.Appointments
                 throw new Exception("Only active appointments can be edited.");
             }
 
-            existingAppointment.Date = dtoAppointment.Date;
-
-            var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(dtoAppointment.Id_ClinicBranch);
-            if (clinicBranch == null)
+            if (dtoAppointment.Date.HasValue)
             {
-                throw new Exception("Clinic branch not found.");
-            }
-            existingAppointment.Clinic_Branch = clinicBranch;
+                var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date.Value, existingAppointment.User.Id_User);
 
-            var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(dtoAppointment.Id_Appoitment_Type);
-            if (appointmentType == null)
-            {
-                throw new Exception("Appointment type not found.");
-            }
-            existingAppointment.AppointmentType = appointmentType;
+                if (!isDateTimeAvailable)
+                {
+                    throw new Exception("The selected date and time are not available.");
+                }
 
-            var user = await _myDbContext.Users.FindAsync(dtoAppointment.Id_User);
-            if (user == null)
-            {
-                throw new Exception("User not found.");
-            }
-            existingAppointment.User = user;
-
-            if (dtoAppointment.Status == false)
-            {
-                existingAppointment.Status = false;
+                existingAppointment.Date = dtoAppointment.Date.Value;
             }
 
-            var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date, dtoAppointment.Id_User);
-
-            if (!isDateTimeAvailable)
+            if (dtoAppointment.Id_ClinicBranch.HasValue)
             {
-                throw new Exception("The selected date and time are not available.");
+                var clinicBranch = await _myDbContext.Clinic_Branches.FindAsync(dtoAppointment.Id_ClinicBranch.Value);
+                if (clinicBranch == null)
+                {
+                    throw new Exception("Clinic branch not found.");
+                }
+                existingAppointment.Clinic_Branch = clinicBranch;
             }
 
-            existingAppointment.Date = dtoAppointment.Date;
+            if (dtoAppointment.Id_Appoitment_Type.HasValue)
+            {
+                var appointmentType = await _myDbContext.AppointmentTypes.FindAsync(dtoAppointment.Id_Appoitment_Type.Value);
+                if (appointmentType == null)
+                {
+                    throw new Exception("Appointment type not found.");
+                }
+                existingAppointment.AppointmentType = appointmentType;
+            }
 
             await _myDbContext.SaveChangesAsync();
 
-            return ConvertToAddDto(existingAppointment);
+            return ConvertToUpdateDto(existingAppointment);
         }
 
 
@@ -399,6 +392,17 @@ namespace Services.Appointments
                 Id_ClinicBranch = appointment.Clinic_Branch.Id_ClinicBranch,
                 Id_Appoitment_Type = appointment.AppointmentType.Id_Appoitment_Type,
                 Id_User = appointment.User.Id_User
+            };
+        }
+
+
+        public DtoUpdateAppointment ConvertToUpdateDto(Appointment appointment)
+        {
+            return new DtoUpdateAppointment
+            {
+                Date = DateTime.Parse(appointment.Date.ToString("yyyy-MM-dd HH:mm")),
+                Id_ClinicBranch = appointment.Clinic_Branch.Id_ClinicBranch,
+                Id_Appoitment_Type = appointment.AppointmentType.Id_Appoitment_Type
             };
         }
 
