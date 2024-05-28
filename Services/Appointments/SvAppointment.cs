@@ -236,7 +236,12 @@ namespace Services.Appointments
 
         public async Task<DtoUpdateAppointment> UpdateAppointment(int id, DtoUpdateAppointment dtoAppointment)
         {
-            var existingAppointment = await _myDbContext.Appointments.SingleOrDefaultAsync(x => x.Id_Appoitment == id);
+            var existingAppointment = await _myDbContext.Appointments
+       .Include(x => x.User)
+       .Include(x => x.Clinic_Branch)
+       .Include(x => x.AppointmentType)
+       .SingleOrDefaultAsync(x => x.Id_Appoitment == id);
+
 
             if (existingAppointment == null)
             {
@@ -248,9 +253,16 @@ namespace Services.Appointments
                 throw new Exception("Only active appointments can be edited.");
             }
 
-            if (dtoAppointment.Date.HasValue)
-            {
+            if (dtoAppointment.Date.HasValue) {
+
+
+                if (existingAppointment.User == null)
+                {
+                    throw new Exception("No user associated with this appointment.");
+                }
+
                 var isDateTimeAvailable = await IsDateTimeAvailable(dtoAppointment.Date.Value, existingAppointment.User.Id_User);
+
 
                 if (!isDateTimeAvailable)
                 {
