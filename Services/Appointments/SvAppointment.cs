@@ -173,7 +173,7 @@ namespace Services.Appointments
 
                 var appointment = new Appointment
                 {
-                    Status = dtoAppointment.Status,
+                    Status = true,
                     Date = dtoAppointment.Date,
                     User = user,
                     Clinic_Branch = clinicBranch,
@@ -399,7 +399,6 @@ namespace Services.Appointments
             return new DtoAddAppointment
             {
                 Id_Appointment = appointment.Id_Appoitment,
-                Status = appointment.Status,
                 Date = DateTime.Parse(appointment.Date.ToString("yyyy-MM-dd HH:mm")),
                 Id_ClinicBranch = appointment.Clinic_Branch.Id_ClinicBranch,
                 Id_Appoitment_Type = appointment.AppointmentType.Id_Appoitment_Type,

@@ -54,7 +54,7 @@ namespace Services.Extensions
         public class DtoAddAppointment
         {
             public int Id_Appointment { get; set; }
-            public bool Status { get; set; }
+  
             public DateTime Date { get; set; }
             public int Id_ClinicBranch { get; set; }
             public int Id_Appoitment_Type { get; set; }
