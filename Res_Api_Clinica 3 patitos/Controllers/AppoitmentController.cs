@@ -1,6 +1,8 @@
 ﻿using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Appointments;
+using System.Data;
 using static Services.Extensions.DtoMapping;
 
 namespace API_PruebaEF.Controllers
@@ -15,6 +17,8 @@ namespace API_PruebaEF.Controllers
         {
             _svAppointment = svAppointment;
         }
+
+
 
         // READ
         [HttpGet]
@@ -31,12 +35,14 @@ namespace API_PruebaEF.Controllers
 
 
         [HttpGet("user/{userId}")]
+        [Authorize(Roles = "User")]
         public async Task<IEnumerable<DtoAppointment>> GetAppointmentsByUserId(int userId)
         {
             return await _svAppointment.GetAppointmentsByUserId(userId);
         }
 
         [HttpGet("today")]
+        [Authorize(Roles = "Admin")]
         public async Task<IEnumerable<DtoAppointment>> GetAppointmentsForToday()
         {
             return await _svAppointment.GetAppointmentsForToday();
@@ -48,16 +54,22 @@ namespace API_PruebaEF.Controllers
             return await _svAppointment.GetAppointmentDates();
         }
 
+        
 
         // WRITE
         [HttpPost]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> Post([FromBody] DtoAddAppointment dtoAppointment)
         {
             await _svAppointment.AddAppointments(new List<DtoAddAppointment> { dtoAppointment });
             return Ok();
         }
-
+       
+        
+        
+        
         [HttpPatch("{id}")]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult<DtoUpdateAppointment>> Patch(int id, [FromBody] DtoUpdateAppointment dtoAppointment)
         {
             var updatedAppointment = await _svAppointment.UpdateAppointment(id, dtoAppointment);
@@ -66,6 +78,7 @@ namespace API_PruebaEF.Controllers
 
 
         [HttpPatch("cancel/{id}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CancelAppointment(int id)
         {
             try
@@ -80,8 +93,9 @@ namespace API_PruebaEF.Controllers
         }
 
 
-
+        
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _svAppointment.DeleteAppointment(id);
