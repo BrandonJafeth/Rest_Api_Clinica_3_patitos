@@ -35,14 +35,14 @@ namespace API_PruebaEF.Controllers
 
 
         [HttpGet("user/{userId}")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "USER")]
         public async Task<IEnumerable<DtoAppointment>> GetAppointmentsByUserId(int userId)
         {
             return await _svAppointment.GetAppointmentsByUserId(userId);
         }
 
         [HttpGet("today")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IEnumerable<DtoAppointment>> GetAppointmentsForToday()
         {
             return await _svAppointment.GetAppointmentsForToday();
@@ -58,7 +58,7 @@ namespace API_PruebaEF.Controllers
 
         // WRITE
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "USER")]
         public async Task<IActionResult> Post([FromBody] DtoAddAppointment dtoAppointment)
         {
             await _svAppointment.AddAppointments(new List<DtoAddAppointment> { dtoAppointment });
@@ -69,7 +69,7 @@ namespace API_PruebaEF.Controllers
         
         
         [HttpPatch("{id}")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "USER")]
         public async Task<ActionResult<DtoUpdateAppointment>> Patch(int id, [FromBody] DtoUpdateAppointment dtoAppointment)
         {
             var updatedAppointment = await _svAppointment.UpdateAppointment(id, dtoAppointment);
@@ -78,7 +78,7 @@ namespace API_PruebaEF.Controllers
 
 
         [HttpPatch("cancel/{id}")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "USER")]
         public async Task<IActionResult> CancelAppointment(int id)
         {
             try
@@ -95,7 +95,7 @@ namespace API_PruebaEF.Controllers
 
         
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
         {
             await _svAppointment.DeleteAppointment(id);
