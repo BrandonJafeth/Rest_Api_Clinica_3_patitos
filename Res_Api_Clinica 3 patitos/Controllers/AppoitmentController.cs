@@ -18,6 +18,10 @@ namespace API_PruebaEF.Controllers
             _svAppointment = svAppointment;
         }
 
+        public AppoitmentController(ISvAppointment svAppointment, IAuthorizationService @object) : this(svAppointment)
+        {
+        }
+
 
 
         // READ
